@@ -32,10 +32,10 @@ public class Main {
     public static void pairSum(int[] array, int requiredSum) {
 
         if (array == null) {
-            throw new NullPointerException("Массив не был передан.");
+            throw new NullPointerException("Массив не был передан или он пустой.");
         }
-
         sort(array);
+
         int count = 0;
         int start = 0;
         int end = array.length - 1;
@@ -69,7 +69,7 @@ public class Main {
      */
     public static void sort(int[] array) {
         if (array == null) {
-            throw new NullPointerException("Массив не был передан.");
+            throw new NullPointerException("Массив не был передан или он пустой.");
         }
         for (int i = 1; i < array.length; i++) {
             int current = array[i];
