@@ -6,6 +6,9 @@
 
 package Task3;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 public class Main {
 
     public static void main(String[] args) {
@@ -24,44 +27,45 @@ public class Main {
      * @return В случае если искомое подходит то: true, в противном: false
      */
     public static boolean fuzzySearch(String needle, String word) {
-        if (needle == null) {
-            throw new NullPointerException("Отсутствует искомое слово.");
-        }
 
-        if (word == null) {
-            throw new NullPointerException("Отсутствует оригинальное слово.");
-        }
+        String fuzzyMatcher = String.format("[^%s]", needle);
+        Pattern pattern = Pattern.compile(fuzzyMatcher);
+        Matcher matcher = pattern.matcher(word);
 
-        int needleL = needle.length();
-        int wordL = word.length();
-        int success = 0;
-        int temp = 0;
+        String result = matcher.replaceAll("");
+        return result.equals(needle);
 
-        if (needleL > wordL) {
-            return false;
-        }
-
-        if (needleL == wordL && needle.equals(word)) {
-            return true;
-        }
-
-        for (int i = 0; i < needleL; i++) {
-
-            char needleCh = needle.charAt(i);
-
-            for (int j = temp; j < wordL; j++) {
-
-                if (needleCh == word.charAt(j)) {
-                    success++;
-                    temp = ++j;
-                    break;
-                }
-            }
-
-            if (success == needleL) {
-                return true;
-            }
-        }
-        return false;
+//        int needleL = needle.length();
+//        int wordL = word.length();
+//        int success = 0;
+//        int cursor = 0;
+//
+//        if (needleL > wordL) {
+//            return false;
+//        }
+//
+//        if (needleL == wordL && needle.equals(word)) {
+//            return true;
+//        }
+//
+//        for (int i = 0; i < needleL; i++) {
+//
+//            char needleCh = needle.charAt(i);
+//
+//            for (int j = cursor; j < wordL; j++) {
+//
+//                if (needleCh == word.charAt(j)) {
+//                    success++;
+//                    cursor = ++j;
+//                    break;
+//                }
+//
+//            }
+//
+//            if (success == needleL) {
+//                return true;
+//            }
+//        }
+//        return false;
     }
 }

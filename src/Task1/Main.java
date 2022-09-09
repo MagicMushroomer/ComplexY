@@ -110,10 +110,7 @@ public class Main {
                 .sorted(Comparator.comparing(Person::getName))
                 .collect(Collectors.groupingByConcurrent(Person::getName, Collectors.counting()));
 
-
-        for (Map.Entry<String, Long> item : filtered.entrySet()) {
-            System.out.printf("Key: %s  \nValue: %d \n", item.getKey(), item.getValue());
-        }
+        filtered.forEach((key, value) -> System.out.printf("Key: %s  \nValue: %d \n", key, value));
 
         /*
         Task1
