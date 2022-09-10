@@ -6,6 +6,9 @@
 
 package Task3;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 public class Main {
 
     public static void main(String[] args) {
@@ -24,44 +27,37 @@ public class Main {
      * @return В случае если искомое подходит то: true, в противном: false
      */
     public static boolean fuzzySearch(String needle, String word) {
-        if (needle == null) {
-            throw new NullPointerException("Отсутствует искомое слово.");
-        }
 
-        if (word == null) {
-            throw new NullPointerException("Отсутствует оригинальное слово.");
-        }
+//        String fuzzyMatcher = String.format("[^%s]", needle);
+//        Pattern pattern = Pattern.compile(fuzzyMatcher);
+//        Matcher matcher = pattern.matcher(word);
+//
+//        String result = matcher.replaceAll("");
+//        return result.equals(needle);
 
-        int needleL = needle.length();
-        int wordL = word.length();
-        int success = 0;
-        int temp = 0;
+        int needleLength = needle.length();
+        int wordLength = word.length();
 
-        if (needleL > wordL) {
+        if (needleLength > wordLength) {
             return false;
         }
 
-        if (needleL == wordL && needle.equals(word)) {
+        if (needleLength == wordLength && needle.equals(word)) {
             return true;
         }
 
-        for (int i = 0; i < needleL; i++) {
+        outer:
+        for (int i = 0, j = 0; i < needleLength; i++) {
+            char needleElement = needle.charAt(i);
 
-            char needleCh = needle.charAt(i);
+            while (j < wordLength) {
 
-            for (int j = temp; j < wordL; j++) {
-
-                if (needleCh == word.charAt(j)) {
-                    success++;
-                    temp = ++j;
-                    break;
+                if (word.charAt(j++) == needleElement) {
+                    continue outer;
                 }
             }
-
-            if (success == needleL) {
-                return true;
-            }
+            return false;
         }
-        return false;
+        return true;
     }
 }
