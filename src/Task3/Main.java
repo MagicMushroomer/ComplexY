@@ -27,37 +27,42 @@ public class Main {
      * @return В случае если искомое подходит то: true, в противном: false
      */
     public static boolean fuzzySearch(String needle, String word) {
-
+//        Вариант с RegEx
 //        String fuzzyMatcher = String.format("[^%s]", needle);
 //        Pattern pattern = Pattern.compile(fuzzyMatcher);
 //        Matcher matcher = pattern.matcher(word);
 //
 //        String result = matcher.replaceAll("");
 //        return result.equals(needle);
+        StringBuilder result = new StringBuilder();
 
-        int needleLength = needle.length();
-        int wordLength = word.length();
-
-        if (needleLength > wordLength) {
+        if (needle.length() > word.length()) {
             return false;
         }
 
-        if (needleLength == wordLength && needle.equals(word)) {
+        if (needle.length() == word.length() && needle.equals(word)) {
             return true;
         }
 
-        outer:
-        for (int i = 0, j = 0; i < needleLength; i++) {
-            char needleElement = needle.charAt(i);
+//        outer:
+//        for (int i = 0, j = 0; i < needle.length(); i++) {
+//
+//            while (j < word.length()) {
+//
+//                if (word.charAt(j++) == needle.charAt(i)) {
+//                    continue outer;
+//                }
+//            }
+//            return false;
+//        }
+//        return true;
+        for (int i = 0, j = 0; i < word.length(); i++) {
 
-            while (j < wordLength) {
-
-                if (word.charAt(j++) == needleElement) {
-                    continue outer;
-                }
+            if (j < needle.length() && needle.charAt(j) == word.charAt(i)) {
+                    result.append(needle.charAt(j));
+                    j++;
             }
-            return false;
         }
-        return true;
+        return result.toString().equals(needle);
     }
 }
